@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <script>
+      simplePlot={};
+    </script>
+   <script src="http://d3js.org/d3.v3.min.js"></script>
+   <script src="axis.js"></script>
+   <script src="barplot.js"></script>
+   <style type="text/css">
+    #example {width: 500px; height:500px;}
+    </style>
+  </head>
+  <body>
+    <svg id="example"></svg>
+    <script>
+      var plot = simplePlot.BarPlot({});
+      plot.height(200).width(500);
+      d = [{x: 2, y:10}, {x: 3, y:10}];
+      d3.select("#example").datum(d).call(plot);
+      console.log(d3.select("#example").data());
+    </script>
+  </body>
+</html>

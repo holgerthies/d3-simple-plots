@@ -9,10 +9,10 @@ simplePlot.axis = function(){
   function my(selection){
       // generate axis
       // range for x axis
-      var x_range = d3.scale.linear().range([MARGINS.left, width-MARGINS.right])
+      x_range = d3.scale.linear().range([MARGINS.left, width-MARGINS.right])
                .domain(xaxis);
      // range for y axis
-      var y_range = d3.scale.linear().range([MARGINS.bottom, height - MARGINS.top])
+      y_range = d3.scale.linear().range([height - MARGINS.top,MARGINS.bottom])
                .domain(yaxis);
       // define x axis
       xAxis = d3.svg.axis()
@@ -69,5 +69,17 @@ simplePlot.axis = function(){
     return my;
   };
 
+  // getter and setter for range of xaxis
+  my.xrange = function(){
+    x_range = d3.scale.linear().range([MARGINS.left, width-MARGINS.right])
+               .domain(xaxis);
+    return x_range;
+  }
+  // getter and setter for range of yaxis
+  my.yrange = function(){
+    y_range = d3.scale.linear().range([MARGINS.bottom, height - MARGINS.top])
+               .domain(yaxis);
+    return y_range;
+  }
   return my;
 }

@@ -77,7 +77,7 @@ simplePlot.axis = function(){
   }
   // getter and setter for range of yaxis
   my.yrange = function(){
-    y_range = d3.scale.linear().range([MARGINS.bottom, height - MARGINS.top])
+      y_range = d3.scale.linear().range([height - MARGINS.top,MARGINS.bottom])
                .domain(yaxis);
     return y_range;
   }

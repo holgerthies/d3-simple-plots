@@ -8,16 +8,22 @@
    <script src="barplot.js"></script>
    <style type="text/css">
     #example {width: 500px; height:500px;}
+    .bar-1-1 {fill: #ffff00;}
+    .bar-1-2 {fill: #ff9900;}
+    .bar-2-1 {fill: #ff0000;}
+    .bar-2-2 {fill: #dd0000;}
+    .bar-2-3 {fill: #660000;}
+    rect:hover {fill: #0000ff;}
     </style>
   </head>
   <body>
     <svg id="example"></svg>
     <script>
       var plot = simplePlot.BarPlot({});
-      plot.height(200).width(500);
-      d = [{x: 2, y:10}, {x: 3, y:10}];
+      plot.height(200).width(500).start(0).end(20);
+      d = [[{x: 2, y:[10, 30]}, {x: 3, y:[20, 40]} ], [{x: 2, y:[10]}, {x: 3,
+        y:[20,30,40]} ]];
       d3.select("#example").datum(d).call(plot);
-      console.log(d3.select("#example").data());
     </script>
   </body>
 </html>

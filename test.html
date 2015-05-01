@@ -6,26 +6,37 @@
    <script src="http://d3js.org/d3.v3.min.js"></script>
    <script src="axis.js"></script>
    <script src="barplot.js"></script>
+   <script src="lineplot.js"></script>
    <style type="text/css">
-    #example {width: 500px; height:500px;}
+    #example, #example2 {width: 500px; height:500px;}
     .bar-1-1 {fill: #ffff00;}
     .bar-1-2 {fill: #ff9900;}
     .bar-2-1 {fill: #ff0000;}
     .bar-2-2 {fill: #dd0000;}
     .bar-2-3 {fill: #660000;}
+    .line-1 {stroke: red;}
     rect:hover {fill: #0000ff;}
     </style>
   </head>
   <body>
     <svg id="example"></svg>
-    <script>
-      var plot = simplePlot.BarPlot({});
-      plot.height(200).width(500).start(0).end(20).xtitle("Tag").ytitle("kwH");
-      d = [[{x: 2, y:[10, 30]}, {x: 3, y:[20, 40]} ], [{x: 2, y:[10]}, {x: 3, y:[20,30,40]} ]];
-      d3.select("#example").datum(d).call(plot);
-    </script>
     Zoom <input type="text" onchange="plot.start(this.value); plot.redraw()" size="3">
     <input type="text" onchange="plot.end(this.value); plot.redraw()" size="3">
     <button onClick="plot.toggleHidden(1,1)">Toggle</button>
+    <svg id="example2"></svg>
+    Zoom <input type="text" onchange="lplot.start(this.value); lplot.redraw()" size="3">
+    <input type="text" onchange="lplot.end(this.value); lplot.redraw()" size="3">
+    <button onClick="lplot.toggleHidden(1)">Toggle</button>
+    <script>
+      var plot = simplePlot.BarPlot();
+      plot.height(200).width(500).start(0).end(20).xtitle("Tag").ytitle("kwH");
+      d = [[{x: 2, y:[10, 30]}, {x: 3, y:[20, 40]} ], [{x: 2, y:[10]}, {x: 3, y:[20,30,40]} ]];
+      d3.select("#example").datum(d).call(plot);
+      var lplot = simplePlot.linePlot();
+      lplot.height(200).width(500).start(0).end(24).xtitle("Stunde").ytitle("kwH");
+      d2 = [[{x: 0, y:10}, {x: 3, y:5}, {x: 5, y: 20}, {x: 7, y: 25}, {x: 8, y:
+        27}, {x: 10, y: 30}, {x:14, y:20}, {x:20, y:70}  ], [{x: 2, y:20}, {x: 3, y:50} ]];
+      d3.select("#example2").datum(d2).call(lplot);
+    </script>
   </body>
 </html>

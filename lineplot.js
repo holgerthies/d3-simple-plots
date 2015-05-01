@@ -1,6 +1,6 @@
-// draws a simple interactive bar plot
+// draws a simple interactive line plot
 // data has the form
-simplePlot.BarPlot = function(){
+simplePlot.linePlot = function(){
   var selection;
   var hidden=[];
   my.redraw = function(){
@@ -16,35 +16,36 @@ simplePlot.BarPlot = function(){
     var xRange = axis.xrange();
     var yRange = axis.yrange();
     selection.call(axis);
-    // draw bar for each element in data
+    // draw line for each element in data
     var data = selection.datum();
-    var nbars = end-start+1;
-    var barwidth = 0.9*width/(data.length * nbars); 
+    // function to compute position of data-point
+		var lineFunc = d3.svg.line()
+		  .x(function(d) {
+		    return xRange(d.x);
+		  })
+		  .y(function(d) {
+		    return yRange(d.y);
+		  })
+		  .interpolate('linear');
+    // function to filter only those values that are in the xrange
+    var filter = function(arr){
+      var result=[];
+      for(k=0; k < arr.length; k++){
+        if(arr[k].x >= start && arr[k].x <= end)
+          result.push(arr[k]);
+      }
+      return result;
+    }
     for(i = 0; i < data.length; i++){
-      var bardata=data[i]; // data for the current set of bars
-      for(j = 0; j < bardata.length; j++)
+      if(hidden.indexOf(i+1) == -1)
       {
-        var d = bardata[j];
-        if(d.x >= start && d.x <= end)
-        {
-          curr_height = 0;
-          for(k = 0; k < d.y.length; k++)// stacked data
-          {
-            if( hidden.indexOf((i+1)+"-"+(k+1)) == -1)
-            {
-              selection.append('rect')
-                .attr('class', 'bar-'+(i+1)+'-'+(k+1))
-                .attr('x', xRange(d.x)+i*barwidth)
-                .attr('y',  yRange(d.y[k]))
-                .attr('width', barwidth) // sets the width of bar
-                .attr('height', (height - 20) - yRange(d.y[k]))
-                .attr('transform', 'translate('+0+', '+-curr_height+')')
-                    .append('title')
-                    .text(d.y[k]);
-                    curr_height += (height - 20) - yRange(d.y[k]);
-             }
-           }
-        } 
+        var linedata = filter(data[i]);
+        selection.append('svg:path')
+          .attr('d', lineFunc(linedata))
+          .attr('stroke', 'black')
+          .attr('class', 'line-'+(i+1))
+          .attr('stroke-width', 2)
+          .attr("fill", "none");
       }
     }
   }
@@ -77,25 +78,23 @@ simplePlot.BarPlot = function(){
     height = value;
     return my;
   };
-  // get and set index of first bar
+  // get and set index where the line starts
   my.start = function(value){
     if(!arguments.length) return start;
     start = value;
     return my;
   };
-  // get and set index of last bar
+  // get and set index where the line end
   my.end = function(value){
     if(!arguments.length) return end;
     end = value;
     return my;
   };
-  // shows/hides the bars with given index
-  // first index is the group of bars
-  // second index is the position in the stack
-  my.toggleHidden = function(i, j){
-    var index = hidden.indexOf(i+"-"+j);
+  // shows/hides the line with given index
+  my.toggleHidden = function(i){
+    var index = hidden.indexOf(i);
     if(index == -1){
-      hidden.push(i+"-"+j);
+      hidden.push(i);
     }
     else {
       hidden.splice(index, 1);
@@ -106,3 +105,4 @@ simplePlot.BarPlot = function(){
 
 
 }
+

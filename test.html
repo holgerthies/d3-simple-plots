@@ -20,10 +20,12 @@
     <svg id="example"></svg>
     <script>
       var plot = simplePlot.BarPlot({});
-      plot.height(200).width(500).start(0).end(20);
-      d = [[{x: 2, y:[10, 30]}, {x: 3, y:[20, 40]} ], [{x: 2, y:[10]}, {x: 3,
-        y:[20,30,40]} ]];
+      plot.height(200).width(500).start(0).end(20).xtitle("Tag").ytitle("kwH");
+      d = [[{x: 2, y:[10, 30]}, {x: 3, y:[20, 40]} ], [{x: 2, y:[10]}, {x: 3, y:[20,30,40]} ]];
       d3.select("#example").datum(d).call(plot);
     </script>
+    Zoom <input type="text" onchange="plot.start(this.value); plot.redraw()" size="3">
+    <input type="text" onchange="plot.end(this.value); plot.redraw()" size="3">
+    <button onClick="plot.toggleHidden(1,1)">Toggle</button>
   </body>
 </html>

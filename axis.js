@@ -32,12 +32,23 @@ simplePlot.axis = function(){
       selection.append('svg:g')
         .attr('class', 'x-axis')
         .attr('transform', 'translate(0, '+(height - MARGINS.bottom)+')')
-        .call(xAxis);
+        .call(xAxis)
+        .append("text") // draw axis label
+        .attr("x", width/2)
+        .attr("dy", 40)
+        .text(xtitle);
+      
       // draw y axis
       selection.append('svg:g')
         .attr('class', 'y-axis')
         .attr('transform', 'translate('+(MARGINS.left)+', 0)')
-        .call(yAxis);
+        .call(yAxis)
+        .append("text") // draw axis label
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height/2)
+        .attr("dy", -30)
+         .style("text-anchor", "end")
+        .text(ytitle);
   };
   
   // set xaxis range, value is array [left,right]
@@ -80,6 +91,17 @@ simplePlot.axis = function(){
       y_range = d3.scale.linear().range([height - MARGINS.top,MARGINS.bottom])
                .domain(yaxis);
     return y_range;
-  }
+  };
+  my.xtitle = function(value){
+    if(!arguments.length) return xtitle;
+    xtitle = value;
+    return my;
+  };
+  
+  my.ytitle = function(value){
+    if(!arguments.length) return ytitle;
+    ytitle = value;
+    return my;
+  };
   return my;
 }

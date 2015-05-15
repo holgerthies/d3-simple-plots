@@ -122,7 +122,4 @@ simplePlot.linePlot = function(){
     my.redraw();
   }
   return my;
-
-
 }
-

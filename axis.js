@@ -24,8 +24,8 @@ simplePlot.axis = function(){
       // define y axis
       yAxis = d3.svg.axis()
                 .scale(y_range)
-                .tickSize(1)
                 .ticks(8)
+                .tickSize(1)
                 .orient('left');
       
       // draw x axis
